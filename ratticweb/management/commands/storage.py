@@ -68,7 +68,7 @@ class BackupStorage(object):
         """Make sure our storage is fine and yield self as the storage helper"""
         try:
             self.validate_destination()
-        except (boto.exception.BotoClientError, boto.exception.BotoServerError, boto.exception.NoAuthHandlerFound), error:
+        except (boto.exception.BotoClientError, boto.exception.BotoServerError, boto.exception.NoAuthHandlerFound) as error:
             raise FailedBackup("Failed to interact with s3: {0}".format(error))
 
         return self
@@ -89,7 +89,7 @@ class BackupStorage(object):
             try:
                 self.bucket = conn.get_bucket(self.bucket_location)
                 self.has_storage = True
-            except boto.exception.S3ResponseError, error:
+            except boto.exception.S3ResponseError as error:
                 if error.status == 404:
                     raise FailedBackup("Please first create the s3 bucket where you want your backups to go ({0})".format(self.bucket_location))
                 raise

@@ -48,6 +48,7 @@ class LDAPPassChangeForm(SetPasswordForm):
 
         return self.user
 
+
 LDAPPassChangeForm.base_fields.keyOrder = ['old_password', 'new_password1', 'new_password2']
 
 
@@ -68,6 +69,7 @@ class UserProfileForm(ModelForm):
         widgets = {
             'favourite_tags': SelectMultiple(attrs={'class': 'selectize-multiple'}),
         }
+
 
 # Attach the UserProfile object to the User
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

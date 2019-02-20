@@ -27,7 +27,7 @@ class CredExportTests(TestCase):
         # Check for the right headers
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp['content-type'], 'application/x-keepass')
-        self.assertRegexpMatches(resp['content-disposition'], 'attachment; filename=\w+\.\w+')
+        self.assertRegexpMatches(resp['content-disposition'], r'attachment; filename=\w+\.\w+')
 
         # Check the DB we got
         keepassdb = StringIO(resp.content)

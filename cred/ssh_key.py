@@ -4,7 +4,7 @@ import binascii
 
 
 def insert_char_every_n_chars(string, char='\n', every=64):
-    return char.join(string[i:i + every] for i in xrange(0, len(string), every))
+    return char.join(string[i:i + every] for i in range(0, len(string), every))
 
 
 class SSHKey(object):

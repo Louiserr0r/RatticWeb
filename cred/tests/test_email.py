@@ -16,7 +16,7 @@ class CredEmailTests(TestCase):
     def test_change_queue_email(self):
         change_queue_emails()
 
-        print mail.outbox[0].body
+        print(mail.outbox[0].body)
 
         salutation = 'Hello ' + self.data.unorm.username + ',\n'
         credlink = 'https://' + settings.HOSTNAME + reverse('cred.views.detail', args=(self.data.cred.id, ))

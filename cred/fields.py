@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from south.modelsinspector import add_introspection_rules
 
 
-add_introspection_rules([], ["^cred\.fields\.SizedFileField"])
+add_introspection_rules([], [r"^cred\.fields\.SizedFileField"])
 
 
 class SizedFileField(FileField):

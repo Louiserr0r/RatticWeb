@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
         if recipients is None:
             raise CommandError("No recipients list has been specified.")
-        elif not isinstance(recipients, list) and not isinstance(recipients, tuple) and not isinstance(recipients, basestring):
+        elif not isinstance(recipients, list) and not isinstance(recipients, tuple) and not isinstance(recipients, str):
             raise CommandError("Recipients list needs to be a list of strings or a comma separated string, not {0}".format(type(recipients)))
 
     def handle(self, *args, **options):
@@ -31,7 +31,7 @@ class Command(BaseCommand):
         self.validate_options(backup_dir, recipients)
 
         # Make sure the recipients is a list
-        if isinstance(recipients, basestring):
+        if isinstance(recipients, str):
             recipients = recipients.split(",")
 
         try:

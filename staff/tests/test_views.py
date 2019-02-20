@@ -152,7 +152,7 @@ class StaffViewTests(TestCase):
         post['confirmpass'] = 'crazypass'
         resp = self.data.staff.post(reverse('user_add'), post, follow=True)
         with self.assertRaises(KeyError):
-            print resp.context['form'].errors
+            print(resp.context['form'].errors)
         self.assertEqual(resp.status_code, 200)
         newuser = User.objects.get(username='test_user')
         self.assertEqual(newuser.email, 'me@me.com')
@@ -187,5 +187,6 @@ class StaffViewTests(TestCase):
         self.assertEqual(resp.status_code, 200)
         cred = Cred.objects.get(id=self.data.cred.id)
         self.assertFalse(cred.is_deleted)
+
 
 StaffViewTests = override_settings(PASSWORD_HASHERS=('django.contrib.auth.hashers.MD5PasswordHasher',))(StaffViewTests)

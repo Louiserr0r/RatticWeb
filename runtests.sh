@@ -51,7 +51,7 @@ function runtest() {
 }
 
 if (( $tests_only == 0 )); then
-   runtest "PEP8" "pep8 --exclude=migrations,lib,static,.ropeproject --ignore=E501,E225,E128,E124 ."
+   runtest "pycodestyle" "pycodestyle --exclude=migrations,lib,static,.ropeproject --ignore=E501,E225,E128,E124,W503,W504 ."
    runtest "pyflakes" "./pyflakes.sh"
 fi
 

@@ -22,7 +22,7 @@ import uuid
 
 @login_required
 def rattic_change_password(request, *args, **kwargs):
-    print request.user
+    print(request.user)
     if request.user.has_usable_password():
         # If a user is changing their password
         return password_change(request, *args, **kwargs)

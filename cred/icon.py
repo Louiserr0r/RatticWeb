@@ -81,6 +81,8 @@ def get_icon_data():
             settings.CRED_ICON_JSON), 'r').read())
 
     return get_icon_data._icons
+
+
 get_icon_data._icons = None
 
 

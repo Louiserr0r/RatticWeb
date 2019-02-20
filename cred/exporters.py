@@ -20,7 +20,7 @@ def export_keepass(creds, password, filename='RatticExport.kdb'):
             tags += '['
             tags += t.name
             tags += '] '
-        desc = unicode(c.description) + tags
+        desc = str(c.description) + tags
 
         # Create the entry
         e = kpg.create_entry(

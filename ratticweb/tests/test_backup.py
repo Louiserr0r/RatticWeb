@@ -24,7 +24,7 @@ class BackupManagementCommandTest(TestCase):
     def test_complains_if_backup_dir_doesnt_exist(self):
         with a_temp_directory() as backup_dir:
             shutil.rmtree(backup_dir)
-            with self.assertRaisesRegexp(CommandError, "Specified backup_dir \({0}\) doesn't exist".format(backup_dir)):
+            with self.assertRaisesRegexp(CommandError, r"Specified backup_dir \({0}\) doesn't exist".format(backup_dir)):
                 self.command.validate_options(backup_dir, [])
 
     def test_complains_if_no_recipients(self):
