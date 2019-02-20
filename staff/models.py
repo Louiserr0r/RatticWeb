@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from django.utils.translation import ugettext_lazy as _
 from django import forms
-from importloaders import keepass
+from .importloaders import keepass
 from keepassdb.exc import AuthenticationError, InvalidDatabase
 from cred.models import CredAudit
 

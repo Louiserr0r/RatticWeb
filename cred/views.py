@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.http import Http404
@@ -8,10 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import ugettext as _
 
-from models import Cred, CredAudit, Tag, CredChangeQ
-from search import cred_search
-from forms import ExportForm, CredForm, TagForm
-from exporters import export_keepass
+from .models import Cred, CredAudit, Tag, CredChangeQ
+from .search import cred_search
+from .forms import ExportForm, CredForm, TagForm
+from .exporters import export_keepass
 from cred.icon import get_icon_list
 
 from django.contrib.auth.models import Group

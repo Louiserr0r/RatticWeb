@@ -1,6 +1,6 @@
 from django.forms.widgets import ClearableFileInput, HiddenInput
 from django.utils.translation import ugettext_lazy as _
-from templatetags.credicons import cred_icon
+from .templatetags.credicons import cred_icon
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 

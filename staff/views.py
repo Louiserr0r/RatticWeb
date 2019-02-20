@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, Http404
 from django.views.generic.edit import UpdateView, FormView
 from django.utils.decorators import method_decorator
@@ -17,8 +17,8 @@ from django.utils.timezone import utc
 from cred.icon import get_icon_list
 from cred.models import CredAudit, Cred, Tag
 from cred.forms import CredForm
-from models import UserForm, GroupForm, KeepassImportForm, AuditFilterForm
-from decorators import rattic_staff_required
+from .models import UserForm, GroupForm, KeepassImportForm, AuditFilterForm
+from .decorators import rattic_staff_required
 
 
 @rattic_staff_required

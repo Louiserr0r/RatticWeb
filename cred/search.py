@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
-from models import Cred, CredChangeQ, Tag
+from .models import Cred, CredChangeQ, Tag
 
 
 # TODO: Move this to a ModelManager

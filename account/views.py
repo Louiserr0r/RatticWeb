@@ -1,15 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from account.models import ApiKey, ApiKeyForm
-from models import UserProfileForm, LDAPPassChangeForm
+from .models import UserProfileForm, LDAPPassChangeForm
 
 from django.views.decorators.debug import sensitive_post_parameters
 from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from django.utils.timezone import now
 from django.contrib.auth import login
-from django.contrib.auth.views import password_change
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import SetPasswordForm
 from django.utils import timezone
 
@@ -25,11 +25,11 @@ def rattic_change_password(request, *args, **kwargs):
     print(request.user)
     if request.user.has_usable_password():
         # If a user is changing their password
-        return password_change(request, *args, **kwargs)
+        return PasswordChangeView(request, *args, **kwargs)
     else:
         # If a user is setting an initial password
         kwargs['password_change_form'] = SetPasswordForm
-        return password_change(request, *args, **kwargs)
+        return PasswordChangeView(request, *args, **kwargs)
 
 
 @login_required

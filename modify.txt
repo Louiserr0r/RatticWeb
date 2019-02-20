@@ -48,3 +48,4 @@ class Message(models.Model):
 /home/ylhd/.virtualenvs/ratticweb/lib/python3.6/site-packages/social_auth/db/django_models.py +71
 /home/ylhd/.virtualenvs/ratticweb/lib/python3.6/site-packages/openid/__init__.py +52
 /home/ylhd/.virtualenvs/ratticweb/lib/python3.6/site-packages/openid/oidutil.py +167
+/home/ylhd/.virtualenvs/ratticweb/lib/python3.6/site-packages/openid/oidutil.py +12

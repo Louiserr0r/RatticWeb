@@ -3,9 +3,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.forms import ModelForm, SelectMultiple, Select, PasswordInput
 
 import paramiko
-from ssh_key import SSHKey
-from models import Cred, Tag, Group
-from widgets import CredAttachmentInput, CredIconChooser
+from .ssh_key import SSHKey
+from .models import Cred, Tag, Group
+from .widgets import CredAttachmentInput, CredIconChooser
 
 
 class ExportForm(forms.Form):
@@ -17,6 +17,7 @@ class ExportForm(forms.Form):
 class TagForm(ModelForm):
     class Meta:
         model = Tag
+        fields = ["name"]
 
 
 class CredForm(ModelForm):
