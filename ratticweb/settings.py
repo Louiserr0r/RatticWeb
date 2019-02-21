@@ -25,6 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 config = RawConfigParser()
 config.readfp(open('conf/defaults.cfg'))
 CONFIGURED_BY = config.read(['conf/local.cfg', '/etc/ratticweb.cfg'])
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def confget(section, var, default):
@@ -62,26 +63,6 @@ LANGUAGES = (
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
-
-# A tuple of callables that are used to populate the context in
-# RequestContext. These callables take a request object as their
-# argument and return a dictionary of items to be merged into
-# the context.
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
 
 # List of callables that know how to import templates from various sources.
 
@@ -272,7 +253,7 @@ DEBUG = confgetbool('ratticweb', 'debug', False)
 TEMPLATE_DEBUG = DEBUG
 TIME_ZONE = config.get('ratticweb', 'timezone')
 SECRET_KEY = config.get('ratticweb', 'secretkey')
-ALLOWED_HOSTS = [config.get('ratticweb', 'hostname'), 'localhost', '*']
+ALLOWED_HOSTS = [config.get('ratticweb', 'hostname'), 'localhost']
 HOSTNAME = config.get('ratticweb', 'hostname')
 RATTIC_MAX_ATTACHMENT_SIZE = int(config.get('ratticweb', 'max_attachment_size'))
 RATTIC_DISABLE_EXPORT = config.getboolean('ratticweb', 'disable_export')
@@ -289,6 +270,28 @@ LOGGING['loggers']['django.request']['level'] = config.get('ratticweb', 'logleve
 HELP_SYSTEM_FILES = confget('filepaths', 'help', False)
 MEDIA_ROOT = confget('filepaths', 'media', '')
 STATIC_ROOT = confget('filepaths', 'static', '')
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    #os.path.join(BASE_DIR, "static/", ),
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+# A tuple of callables that are used to populate the context in
+# RequestContext. These callables take a request object as their
+# argument and return a dictionary of items to be merged into
+# the context.
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
 
 # [database]
 DATABASES = {

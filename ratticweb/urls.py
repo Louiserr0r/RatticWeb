@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.conf.urls import include, re_path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from tastypie.api import Api
 from cred.api import CredResource, TagResource
@@ -19,20 +19,20 @@ v1_api.register(GroupResource())
 # Setup the base paths for applications, and the API
 base_urlpatterns = [
     # Apps:
-    url(r'^$', main_views.home, name='home'),
-    url(r'^account/', include('account.urls')),
-    url(r'^cred/', include('cred.urls')),
-    url(r'^staff/', include('staff.urls')),
-    url(r'^help/', include('help.urls')),
+    re_path(r'^$', main_views.home, name='home'),
+    re_path(r'^account/', include('account.urls')),
+    re_path(r'^cred/', include('cred.urls')),
+    re_path(r'^staff/', include('staff.urls')),
+    re_path(r'^help/', include('help.urls')),
 
     # API
-    url(r'^api/', include(v1_api.urls)),
+    re_path(r'^api/', include(v1_api.urls)),
 
     # Language
-    url(r'^i18n/', include('django.conf.urls.i18n')),
+    re_path(r'^i18n/', include('django.conf.urls.i18n')),
 
     # two Factor
-    # url(r'^', include('two_factor.urls', namespace='two_factor')),
+    # re_path(r'^', include('two_factor.urls', namespace='two_factor')),
 ]
 
 # If in debug mode enable the Django admin interface
@@ -43,11 +43,16 @@ if settings.DEBUG:
 
     base_urlpatterns += [
         # Uncomment the admin/doc line below to enable admin documentation:
-        url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+        re_path(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
         # Uncomment the next line to enable the admin:
-        url(r'^admin/', include(admin.site.urls)),
+        re_path(r'^admin/', include(admin.site.urls)),
     ]
+else:
+    from django.views.static import serve
+    from .settings import STATIC_ROOT
+    base_urlpatterns.append(re_path(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}))
+    
 
 # Strip any leading slash from the RATTIC_ROOT_URL
 if settings.RATTIC_ROOT_URL[0] == '/':
@@ -57,7 +62,7 @@ else:
 
 # Serve RatticDB from an alternate root if requested
 urlpatterns = [
-    url(r'^' + root, include(base_urlpatterns)),
+    re_path(r'^' + root, include(base_urlpatterns)),
 ]
 
 # Serve the static files from the right location in dev mode
