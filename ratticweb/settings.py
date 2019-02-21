@@ -74,17 +74,6 @@ STATICFILES_DIRS = (
 # RequestContext. These callables take a request object as their
 # argument and return a dictionary of items to be merged into
 # the context.
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    'ratticweb.context_processors.base_template_reqs',
-    'ratticweb.context_processors.logo_selector',
-)
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -95,20 +84,14 @@ STATICFILES_FINDERS = (
 )
 
 # List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
-)
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_otp.middleware.OTPMiddleware',
-
     # Custom Middleware
     'account.middleware.StrictAuthentication',
     'account.middleware.PasswordExpirer',
@@ -117,10 +100,9 @@ MIDDLEWARE_CLASSES = (
     'ratticweb.middleware.CSPMiddleware',
     'ratticweb.middleware.HSTSMiddleware',
     'ratticweb.middleware.DisableContentTypeSniffing',
-
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
 ROOT_URLCONF = 'ratticweb.urls'
 
@@ -128,6 +110,36 @@ ROOT_URLCONF = 'ratticweb.urls'
 RATTIC_ROOT_URL = config.get('ratticweb', 'urlroot')
 MEDIA_URL = urljoin(RATTIC_ROOT_URL, 'media/')
 STATIC_URL = urljoin(RATTIC_ROOT_URL, 'static/')
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    # 'django.template.loaders.eggs.Loader',
+)
+
+
+TEMPLATES = [ 
+    {   
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [], 
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    # "django.core.context_processors.debug",
+                    # "django.core.context_processors.i18n",
+                    # "django.core.context_processors.media",
+                    # "django.core.context_processors.static",
+                    # "django.core.context_processors.tz",
+                    "django.contrib.messages.context_processors.messages",
+                    'ratticweb.context_processors.base_template_reqs',
+                    'ratticweb.context_processors.logo_selector',
+            ],  
+        },  
+    },  
+]
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ratticweb.wsgi.application'
@@ -138,16 +150,16 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-LOCAL_APPS = (
+LOCAL_APPS = [
     # Sub apps
     'ratticweb',
     'cred',
     'account',
     'staff',
     'help',
-)
+]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     # External apps
     'django.contrib.auth',
     'django.contrib.sessions',
@@ -166,7 +178,7 @@ INSTALLED_APPS = (
     # 'djcelery',
     'database_files',
     'social_django',
-) + LOCAL_APPS
+] + LOCAL_APPS
 
 if os.environ.get("ENABLE_TESTS") == "1":
     INSTALLED_APPS += ('django_nose', )
@@ -260,7 +272,7 @@ DEBUG = confgetbool('ratticweb', 'debug', False)
 TEMPLATE_DEBUG = DEBUG
 TIME_ZONE = config.get('ratticweb', 'timezone')
 SECRET_KEY = config.get('ratticweb', 'secretkey')
-ALLOWED_HOSTS = [config.get('ratticweb', 'hostname'), 'localhost']
+ALLOWED_HOSTS = [config.get('ratticweb', 'hostname'), 'localhost', '*']
 HOSTNAME = config.get('ratticweb', 'hostname')
 RATTIC_MAX_ATTACHMENT_SIZE = int(config.get('ratticweb', 'max_attachment_size'))
 RATTIC_DISABLE_EXPORT = config.getboolean('ratticweb', 'disable_export')

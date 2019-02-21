@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import Group
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.utils import override_settings
 
 from ratticweb.tests.helper import TestData

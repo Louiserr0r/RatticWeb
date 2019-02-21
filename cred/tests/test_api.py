@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import TestCase
 
 from ratticweb.tests.helper import TestData, a_temp_file

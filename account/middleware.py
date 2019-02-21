@@ -1,25 +1,26 @@
 from django.contrib.auth import logout
 from django.conf import settings
 from django.utils.timezone import now
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.utils.deprecation import MiddlewareMixin
 
 
-class StrictAuthentication:
+class StrictAuthentication(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         # Logout users who have been disabled
-        if request.user.is_authenticated() and not request.user.is_active:
-            logout(request)
+        if request.user.is_authenticated and not request.user.is_active:
+            return logout(request)
 
 
-class PasswordExpirer:
+class PasswordExpirer(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         # If there is no password expiry, or LDAP is enabled do nothing
         if not settings.PASSWORD_EXPIRY or settings.LDAP_ENABLED:
             return
 
         # If no user is logged in do nothing
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return
 
         # If they aren't currently trying to change their password

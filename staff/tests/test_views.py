@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils.unittest import skipIf
 from cred.models import Cred
 from django.contrib.auth.models import User, Group
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.utils import override_settings
 from django.conf import settings
 

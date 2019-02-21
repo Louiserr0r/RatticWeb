@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from user_sessions.utils.tests import Client
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from django.contrib.auth.models import User, Group
 from cred.models import Tag, Cred, CredChangeQ, CredAudit

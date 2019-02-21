@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 def home(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect(reverse('cred.views.list'))
     else:
         nextpage = request.GET.get('next', '')

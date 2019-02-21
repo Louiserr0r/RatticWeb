@@ -1,7 +1,8 @@
 from django.utils.cache import patch_cache_control
+from django.utils.deprecation import MiddlewareMixin
 
 
-class DisableClientSideCachingMiddleware(object):
+class DisableClientSideCachingMiddleware(MiddlewareMixin):
     """
     We don't want to cache any page that we dynamically. Additionally
     we want to force no_store to be true so that browsers cannot save
@@ -17,7 +18,7 @@ class DisableClientSideCachingMiddleware(object):
         return response
 
 
-class XUACompatibleMiddleware(object):
+class XUACompatibleMiddleware(MiddlewareMixin):
     """
     Add a X-UA-Compatible header to the response
     This header tells to Internet Explorer to render page with latest
@@ -28,7 +29,7 @@ class XUACompatibleMiddleware(object):
         return response
 
 
-class CSPMiddleware(object):
+class CSPMiddleware(MiddlewareMixin):
     """
     Adds a Content-Security-Policy header to the response. This header
     makes browsers refuse to load content from domains that are not Rattic.
@@ -39,7 +40,7 @@ class CSPMiddleware(object):
         return response
 
 
-class HSTSMiddleware(object):
+class HSTSMiddleware(MiddlewareMixin):
     """
     If a requests arrives via a secured channel, this tells the browser to
     only use secure connections to request further pages. This makes it much
@@ -53,7 +54,7 @@ class HSTSMiddleware(object):
         return response
 
 
-class DisableContentTypeSniffing(object):
+class DisableContentTypeSniffing(MiddlewareMixin):
     """
     This Middleware adds a custom header to disable IE8's Content-Type
     sniffing. The Sniffing in IE8 can cause certain files to be interpreted
