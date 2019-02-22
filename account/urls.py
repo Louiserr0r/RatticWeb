@@ -1,22 +1,24 @@
-from django.conf.urls import include, re_path
+from django.conf.urls import include, re_path, url
 from django.conf import settings
 
 from .views import profile, newapikey, deleteapikey, RatticSessionDeleteView
 from .views import RatticTFADisableView, RatticTFABackupTokensView
 from .views import RatticTFASetupView, RatticTFALoginView
 from .views import RatticTFAGenerateApiKey
-from account.views import rattic_change_password, ldap_password_change
+from .views import RatticChangePasswordView
+from .views import ldap_password_change
 from django.contrib import auth as dj_auth
 
 from two_factor.views import QRGeneratorView
 
-urlpatterns = [
-    re_path(r'^$', profile, {}),
-    re_path(r'^newapikey/$', newapikey, {}),
-    re_path(r'^deleteapikey/(?P<key_id>\d+)/$', deleteapikey, {}),
+app_name='account'
 
-    re_path(r'^logout/$', dj_auth.views.LogoutView, {
-        'next_page': settings.RATTIC_ROOT_URL}),
+urlpatterns = [
+    re_path(r'^$', profile, {}, name='profile'),
+    re_path(r'^newapikey/$', newapikey, {}, name="newapikey"),
+    re_path(r'^deleteapikey/(?P<key_id>\d+)/$', deleteapikey, {}, name="deleteapikey"),
+
+    re_path(r'^logout/$', dj_auth.views.LogoutView.as_view(), name='logout'),
 
     # View to kill other sessions with
     re_path(r'^killsession/(?P<pk>\w+)/', RatticSessionDeleteView.as_view(), name='kill_session'),
@@ -39,26 +41,24 @@ if settings.GOAUTH2_ENABLED:
 # URLs we don't want enabled with LDAP
 if not settings.LDAP_ENABLED:
     urlpatterns += [
-        re_path(r'^reset/$', dj_auth.views.PasswordResetView,
-            {
+        re_path(r'^reset/$', dj_auth.views.PasswordResetView.as_view(), {
                 'post_reset_redirect': '/account/reset/done/',
-                'template_name': 'password_reset.html'
-            },
+                'template_name': 'password_reset.html'},
             name="password_reset"
         ),
 
-        re_path(r'^reset/done/$', dj_auth.views.PasswordResetDoneView, {
+        re_path(r'^reset/done/$', dj_auth.views.PasswordResetDoneView.as_view(), {
             'template_name': 'password_reset_done.html'},
             name="password_reset_done"
         ),
 
-        re_path(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', dj_auth.views.PasswordResetConfirmView, {
+        re_path(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', dj_auth.views.PasswordResetConfirmView.as_view(), {
             'post_reset_redirect': '/',
             'template_name': 'password_reset_confirm.html'},
             name="password_reset_confirm"
         ),
 
-        re_path(r'^changepass/$', rattic_change_password, {
+        url(r'^changepass/$', RatticChangePasswordView.as_view(), {
             'post_change_redirect': '/account/',
             'template_name': 'account_changepass.html'}, name='password_change')
     ]

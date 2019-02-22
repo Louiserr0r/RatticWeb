@@ -57,20 +57,20 @@ class JavascriptTests(LiveServerTestCase):
     def test_search(self):
         searchkey = "_secr3t.p@ssw()rd's\\te5t!"
         self.login_as(self.data.unorm.username, self.data.normpass)
-        self.selenium.get('%s%s' % (self.live_server_url, reverse('cred.views.list')))
+        self.selenium.get('%s%s' % (self.live_server_url, reverse('cred:list')))
         self.waitforload()
         searchbox = self.selenium.find_element_by_id("search-box")
         searchbox.send_keys(searchkey)
         searchbox.send_keys(Keys.ENTER)
         self.waitforload()
         cur_url = urldecode(self.selenium.current_url)
-        plan_url = urldecode('%s%s' % (self.live_server_url, reverse('cred.views.list', args=('search', searchkey))))
+        plan_url = urldecode('%s%s' % (self.live_server_url, reverse('cred:list', args=('search', searchkey))))
         self.assertEquals(cur_url, plan_url)
 
     def test_password_details(self):
         self.login_as(self.data.unorm.username, self.data.normpass)
         self.selenium.get('%s%s' % (self.live_server_url,
-            reverse('cred.views.detail', args=(self.data.cred.id,))))
+            reverse('cred:detail', args=(self.data.cred.id,))))
         self.waitforload()
         elempass = self.selenium.find_element_by_id('password')
         # Check password is hidden
@@ -86,7 +86,7 @@ class JavascriptTests(LiveServerTestCase):
         timeout = 4
         self.login_as(self.data.unorm.username, self.data.normpass)
         self.selenium.get('%s%s' % (self.live_server_url,
-            reverse('cred.views.edit', args=(self.data.cred.id,))))
+            reverse('cred:edit', args=(self.data.cred.id,))))
         self.waitforload()
         elempass = self.selenium.find_element_by_id('id_password')
         currpass = elempass.get_attribute('value')
@@ -111,7 +111,7 @@ class JavascriptTests(LiveServerTestCase):
         timeout = 4
         self.login_as(self.data.unorm.username, self.data.normpass)
         self.selenium.get('%s%s' % (self.live_server_url,
-            reverse('cred.views.edit', args=(self.data.cred.id,))))
+            reverse('cred:edit', args=(self.data.cred.id,))))
         self.waitforload()
         elemlogo = self.selenium.find_element_by_id('id_iconname')
         currlogo = elemlogo.get_attribute('value')
@@ -147,7 +147,7 @@ class JavascriptTests(LiveServerTestCase):
         timeout = 4
         self.login_as(self.data.unorm.username, self.data.normpass)
         self.selenium.get('%s%s' % (self.live_server_url,
-            reverse('cred.views.edit', args=(self.data.cred.id,))))
+            reverse('cred:edit', args=(self.data.cred.id,))))
         self.waitforload()
         elempass = self.selenium.find_element_by_id('id_password')
         # Check password is hidden
@@ -180,7 +180,7 @@ class JavascriptTests(LiveServerTestCase):
         timeout = 4
         self.login_as(self.data.unorm.username, self.data.normpass)
         self.selenium.get('%s%s' % (self.live_server_url,
-            reverse('cred.views.detail', args=(self.data.injectcred.id,))))
+            reverse('cred:detail', args=(self.data.injectcred.id,))))
         self.waitforload()
         elempass = self.selenium.find_element_by_id('password')
         # Hover over password

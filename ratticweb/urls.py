@@ -1,10 +1,12 @@
 from django.conf.urls import include, re_path
+from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from tastypie.api import Api
 from cred.api import CredResource, TagResource
 from staff.api import GroupResource
 from django.conf import settings
 from ratticweb import views as main_views
+import debug_toolbar
 
 # Configure the error handlers
 handler500 = 'ratticweb.views.handle500'
@@ -24,15 +26,13 @@ base_urlpatterns = [
     re_path(r'^cred/', include('cred.urls')),
     re_path(r'^staff/', include('staff.urls')),
     re_path(r'^help/', include('help.urls')),
-
     # API
     re_path(r'^api/', include(v1_api.urls)),
-
     # Language
     re_path(r'^i18n/', include('django.conf.urls.i18n')),
-
+    re_path(r'^__debug__/', include(debug_toolbar.urls))
     # two Factor
-    # re_path(r'^', include('two_factor.urls', namespace='two_factor')),
+    # re_path(r'^', include('two_factor.urls')),
 ]
 
 # If in debug mode enable the Django admin interface
@@ -43,16 +43,15 @@ if settings.DEBUG:
 
     base_urlpatterns += [
         # Uncomment the admin/doc line below to enable admin documentation:
-        re_path(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+        # path('admin/doc/', django.contrib.admindocs.urls),
 
         # Uncomment the next line to enable the admin:
-        re_path(r'^admin/', include(admin.site.urls)),
+        path('admin/', admin.site.urls),
     ]
 else:
     from django.views.static import serve
     from .settings import STATIC_ROOT
     base_urlpatterns.append(re_path(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}))
-    
 
 # Strip any leading slash from the RATTIC_ROOT_URL
 if settings.RATTIC_ROOT_URL[0] == '/':

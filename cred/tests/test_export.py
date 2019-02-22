@@ -22,7 +22,7 @@ class CredExportTests(TestCase):
         data = {
             'password': 'testpass',
         }
-        resp = self.data.norm.post(reverse('cred.views.download'), data)
+        resp = self.data.norm.post(reverse('cred:download'), data)
 
         # Check for the right headers
         self.assertEqual(resp.status_code, 200)

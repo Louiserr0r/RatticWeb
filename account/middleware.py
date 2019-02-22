@@ -24,7 +24,7 @@ class PasswordExpirer(MiddlewareMixin):
             return
 
         # If they aren't currently trying to change their password
-        changepassurl = reverse('password_change')
+        changepassurl = reverse('account:password_change')
         if request.method != 'GET' or request.path == changepassurl:
             return
 

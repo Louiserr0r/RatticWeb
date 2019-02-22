@@ -26,6 +26,9 @@ config = RawConfigParser()
 config.readfp(open('conf/defaults.cfg'))
 CONFIGURED_BY = config.read(['conf/local.cfg', '/etc/ratticweb.cfg'])
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOGOUT_REDIRECT_URL='home'
+LOGIN_REDIRECT_URL='cred:list'
+INTERNAL_IPS = ['*', ]
 
 
 def confget(section, var, default):
@@ -83,6 +86,7 @@ MIDDLEWARE = [
     'ratticweb.middleware.DisableContentTypeSniffing',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'ratticweb.urls'
@@ -98,28 +102,27 @@ TEMPLATE_LOADERS = (
     # 'django.template.loaders.eggs.Loader',
 )
 
-
-TEMPLATES = [ 
-    {   
+TEMPLATES = [
+    {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [], 
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.request',
-                    'django.contrib.auth.context_processors.auth',
-                    # "django.core.context_processors.debug",
-                    # "django.core.context_processors.i18n",
-                    # "django.core.context_processors.media",
-                    # "django.core.context_processors.static",
-                    # "django.core.context_processors.tz",
-                    "django.contrib.messages.context_processors.messages",
-                    'ratticweb.context_processors.base_template_reqs',
-                    'ratticweb.context_processors.logo_selector',
-            ],  
-        },  
-    },  
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                # "django.core.context_processors.debug",
+                # "django.core.context_processors.i18n",
+                # "django.core.context_processors.media",
+                # "django.core.context_processors.static",
+                # "django.core.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                'ratticweb.context_processors.base_template_reqs',
+                'ratticweb.context_processors.logo_selector',
+            ],
+        },
+    },
 ]
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -159,6 +162,7 @@ INSTALLED_APPS = [
     # 'djcelery',
     'database_files',
     'social_django',
+    'debug_toolbar'
 ] + LOCAL_APPS
 
 if os.environ.get("ENABLE_TESTS") == "1":
@@ -273,7 +277,7 @@ STATIC_ROOT = confget('filepaths', 'static', '')
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    #os.path.join(BASE_DIR, "static/", ),
+    # os.path.join(BASE_DIR, "static/", ),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -446,3 +450,6 @@ else:
         PASSWORD_EXPIRY = False
     except ValueError:
         PASSWORD_EXPIRY = False
+
+
+# DEBUG_TOOLBAR_CONFIG={'JQUERY_URL': r"http://code.jquery.com/jquery-2.1.1.min.js"}

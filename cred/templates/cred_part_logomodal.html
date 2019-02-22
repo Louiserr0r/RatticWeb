@@ -15,9 +15,11 @@ imgfield - The name of the field to put the chosen icon in after its clicked.
     </div>
     <div class="modal-body">
         <div style="width: 540px">
+            {% autoescape off %}
             {% for icon in icons %}
                 {% cred_icon icon txtfield imgfield %}
             {% endfor %}
+            {% endautoescape %} 
         </div>
     </div>
     <div class="modal-footer">

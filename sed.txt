@@ -1,0 +1,1 @@
+ egrep -rl '(cred|help|staff|account)\.views\.' * |xargs sed -i 's-\(cred\|help\|staff\|account\)\.views\.-\1:-g'
