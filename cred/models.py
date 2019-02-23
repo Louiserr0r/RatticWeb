@@ -207,6 +207,7 @@ class CredAudit(models.Model):
     CREDPASSVIEW = 'P'
     CREDDELETE = 'D'
     CREDSCHEDCHANGE = 'S'
+    CREDLOGINTO = 'L'
     CREDAUDITCHOICES = (
         (CREDADD, _('Added')),
         (CREDCHANGE, _('Changed')),
@@ -216,6 +217,7 @@ class CredAudit(models.Model):
         (CREDDELETE, _('Deleted')),
         (CREDSCHEDCHANGE, _('Scheduled For Change')),
         (CREDPASSVIEW, _('Password Viewed')),
+        (CREDLOGINTO, _('Login To')),
     )
 
     audittype = models.CharField(max_length=1, choices=CREDAUDITCHOICES)
