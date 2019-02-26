@@ -12,6 +12,12 @@ from .ssh_key import SSHKey
 from .fields import SizedFileField
 from .storage import CredAttachmentStorage
 
+CRED_TYPE=(
+        (0, "Normal"),
+        (1, "Mysql"),
+        (2, "GameBackend"),
+        )
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -76,7 +82,10 @@ class Cred(models.Model):
 
     # User changable fields
     title = models.CharField(verbose_name=_('Title'), max_length=64, db_index=True)
+    itype = models.PositiveIntegerField(verbose_name=_('Type'), choices=CRED_TYPE, default=0 )
     url = models.URLField(verbose_name=_('URL'), blank=True, null=True, db_index=True)
+    ip_addr = models.GenericIPAddressField(verbose_name=_('IP Address'), blank=True, null=True, db_index=True)
+    ip_port = models.PositiveIntegerField(verbose_name=_('IP Port'), blank=True, null=True, db_index=True)
     username = models.CharField(verbose_name=_('Username'), max_length=250, blank=True, null=True, db_index=True)
     password = models.CharField(verbose_name=_('Password'), max_length=250, blank=True, null=True)
     descriptionmarkdown = models.BooleanField(verbose_name=_('Markdown Description'), default=False, )

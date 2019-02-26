@@ -72,6 +72,7 @@ USE_TZ = True
 MIDDLEWARE = [
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -162,7 +163,8 @@ INSTALLED_APPS = [
     # 'djcelery',
     'database_files',
     'social_django',
-    'debug_toolbar'
+    # 'debug_toolbar',
+    'corsheaders'
 ] + LOCAL_APPS
 
 if os.environ.get("ENABLE_TESTS") == "1":
@@ -451,5 +453,29 @@ else:
     except ValueError:
         PASSWORD_EXPIRY = False
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = ('*.xx.szylhd.com')
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'VIEW',
+)
+CORS_ALLOW_HEADERS = (
+    'XMLHttpRequest',
+    'X_FILENAME',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 
 # DEBUG_TOOLBAR_CONFIG={'JQUERY_URL': r"http://code.jquery.com/jquery-2.1.1.min.js"}

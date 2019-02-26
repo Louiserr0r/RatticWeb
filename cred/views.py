@@ -16,6 +16,10 @@ from cred.icon import get_icon_list
 
 from django.contrib.auth.models import Group
 
+import logging
+logger = logging.getLogger(__name__)
+
+
 
 @login_required
 def download(request, cfilter="special", value="all"):
@@ -175,6 +179,7 @@ def list(request, cfilter='special', value='all', sortdir='ascending', sort='tit
 
     # Get variables to give the template
     viewdict['credlist'] = cred
+    logger.debug(str(cred))
 
     # Create the form for exporting
     viewdict['exportform'] = ExportForm()
@@ -196,8 +201,7 @@ def detail(request, cred_id):
 
     # Check user has perms as owner or viewer
     if not cred.is_visible_by(request.user):
-        raise Http404
-
+        raise Http404 
     CredAudit(audittype=CredAudit.CREDVIEW, cred=cred, user=request.user).save()
 
     if request.user.is_staff:
@@ -220,6 +224,33 @@ def detail(request, cred_id):
         'readonly': readonly,
         'groups': request.user.groups,
     })
+
+@login_required
+def loginto(request, cred_itype, cred_id):
+    # print('>>>>>>> login to phpmyadmin | cred_id:' + str(cred_id) + " | cred_itype:" + str(cred_itype))
+    onetime_token = "admin:c68449b02b60dc2ccf29730f2cda96cd282567c0"
+    if str(cred_itype) == "1":
+        #return HttpResponseRedirect(reverse('cred:loginto_phpmyadmin', args=(cred_id,)))
+        return HttpResponseRedirect("http://debug.pma.xx.szylhd.com/index.php?cred_id={}&token={}".format(cred_id, onetime_token))
+    else:
+        raise Http404
+
+
+@login_required
+def loginto_phpmyadmin(request, cred_id):
+    print('login to phpmyadmin' + str(cred_id))
+    db_ip_port="47.106.247.172 3306"
+    db_username="root"
+    db_password="8e86e1895bc110107a"
+    return render(request, 'cred_loginto.html', {
+        'db_ip_port' : "",
+        'db_username': "",
+        'db_password': "",
+    })
+
+
+def loginto_phpmyadmin_test(request):
+    return loginto_phpmyadmin(request, 1)
 
 
 @login_required

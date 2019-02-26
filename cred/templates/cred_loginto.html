@@ -1,0 +1,26 @@
+{% load i18n %}
+<html>
+<head>
+<meta charset="utf-8">
+<title>LoginTo phpMyAdmin</title>
+</head>
+<body id=loginform>
+<form method="post" id="login_form" action="http://pma.xx.szylhd.com/index.php" name="login_form" class="disableAjax login hide js-show">
+    <fieldset>
+        <legend><input type="hidden" name="set_session" value="f801d93ab449ad4c57631abc787363a2" />Log in<a href="./doc/html/index.html" target="documentation"></a></legend>
+        <div class="item">
+            <label for="input_servername" title="You can enter hostname/IP address and port separated by space.">Server:</label>
+            <input type="text" name="pma_servername" id="input_servername" value="{{db_ip_port}}" size="24" class="textfield" title="You can enter hostname/IP address and port separated by space." />
+        </div><div class="item">
+            <label for="input_username">Username:</label>
+            <input type="text" name="pma_username" id="input_username" value="{{db_username}}" size="24" class="textfield"/>
+        </div>
+        <div class="item">
+            <label for="input_password">Password:</label>
+            <input type="password" name="pma_password" id="input_password" value="{{db_password}}" size="24" class="textfield" />
+    </div>    <input type="hidden" name="server" value="1" /></fieldset><fieldset class="tblFooters">
+        <input value="Go" type="submit" id="input_go" /><input type="hidden" name="target" value="index.php" /><input type="hidden" name="lang" value="en" /><input type="hidden" name="token" value="]$qj1T~hxExP)%g," /></fieldset>
+</form>
+<script type="application/javascript" src="/static/rattic/js/autologin.js"></script>
+</body>
+</html>
