@@ -80,7 +80,7 @@
       <td class="credcheck"><input type="checkbox" name="credcheck" value="{{ c.id }}" class="list-checktarget cred-list-check" /></td>
       <td>{% autoescape off %}{% cred_icon c.iconname %}{% endautoescape %} 
           {% if c.itype != 0 %}
-          <a class="btn" href="{% url "cred:loginto" c.itype c.id %}" target="_blank">{% trans "LoginTo" %}</a>
+          <a class="btn btn-mini" href="{% url "cred:loginto" c.itype c.id  %}" target="_blank" role="button">{% trans "LoginTo" %}</a>
           {% endif %}
           <a href="{% url "cred:detail" c.id %}">{{ c.title|default:"(No Title)" }}</a>
       </td>

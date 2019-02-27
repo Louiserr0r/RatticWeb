@@ -26,7 +26,7 @@ function fn_auto_input(ip_port, db_user, db_passwd){
     login_form.pma_servername.value = ip_port;
     login_form.pma_username.value = db_user;
     login_form.pma_password.value = db_passwd;
-    // login_form.submit();
+    login_form.submit();
 }
 
 function fn_get_url_args(key){
@@ -68,7 +68,7 @@ function fn_get_cred_detail_by_id(url, id, token){
             //    console.log("DONE")
             //}
         };
-        console.log(token)
+        //console.log(token)
         xhr.open('GET', url + resource_uri);
         xhr.setRequestHeader('Authorization', 'ApiKey ' + token);
         //xhr.setRequestHeader('Content-Type' , 'application/json' );
@@ -83,13 +83,13 @@ window.onload = function(){
     var req = fn_get_cred_detail_by_id(url, cred_id, token)
 
     req.then(function(text){
-        //alert( text );
-        var ip_port = "47.106.247.172 3306";
-        var db_user = "root";   
-        var db_passwd = "8e86e1895bc110107a";
-        //fn_auto_input(ip_port, db_user, db_passwd);
-        fn_auto_input("", "", "");
-
+        cred_obj = JSON.parse(text) 
+        var ip_port = cred_obj.ip_addr + " " + cred_obj.ip_port;
+        var db_user = cred_obj.username;   
+        var db_passwd = cred_obj.password;
+        fn_auto_input(ip_port, db_user, db_passwd);
+        //fn_auto_input("", "", "");
+        //
     }).catch(function(status){
         alert( "failure status : " + status );
     })

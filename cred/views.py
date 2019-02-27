@@ -227,7 +227,7 @@ def detail(request, cred_id):
 
 @login_required
 def loginto(request, cred_itype, cred_id):
-    # print('>>>>>>> login to phpmyadmin | cred_id:' + str(cred_id) + " | cred_itype:" + str(cred_itype))
+    print('>>>>>>> login to phpmyadmin  | cred_itype:' + str(cred_itype) + ' | cred_id:' + str(cred_id))
     onetime_token = "admin:c68449b02b60dc2ccf29730f2cda96cd282567c0"
     if str(cred_itype) == "1":
         #return HttpResponseRedirect(reverse('cred:loginto_phpmyadmin', args=(cred_id,)))

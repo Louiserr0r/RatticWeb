@@ -40,7 +40,7 @@ urlpatterns = [
     re_path(r'^tag/delete/(?P<tag_id>\d+)/$', v.tagdelete, name="tagdelete"),
 
     # Loginto
-    re_path(r'^loginto/(?P<cred_id>\d+)/(?P<cred_itype>\d+)/$', v.loginto, name="loginto"),
+    re_path(r'^loginto/(?P<cred_itype>\d+)/(?P<cred_id>\d+)/$', v.loginto, name="loginto"),
     re_path(r'^loginto/phpmyadmin/test/$', v.loginto_phpmyadmin_test, name="loginto_phpmyadmin_test"),
     re_path(r'^loginto/phpmyadmin/(?P<cred_id>\d+)/$', v.loginto_phpmyadmin, name="loginto_phpmyadmin"),
 ]
